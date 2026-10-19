@@ -12,8 +12,10 @@
 @media(prefers-reduced-motion:no-preference){button{transition:background .12s}}
 @page{size:A4 landscape;margin:10mm}
 @media print{html,body{margin:0!important;padding:0!important;background:white!important;color:black!important}body>*:not(#print-root){display:none!important}#print-root{display:block;font-family:Arial,sans-serif;color:black}.print-sheet{width:277mm;height:189mm;break-inside:avoid;overflow:hidden;display:flex;flex-direction:column;align-items:center}.print-title{font-size:14pt;line-height:7mm;height:8mm;margin:0;text-align:center;max-width:270mm;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.print-map{height:176mm;width:235.806mm;display:block;flex-shrink:0}.print-foot{font-size:6pt;height:4mm;line-height:4mm;text-align:center}.print-map .corridor,.print-map .room{fill:white}.print-map .grid{stroke:#888;stroke-width:.016}.print-map .wall{stroke:black;stroke-width:.09;stroke-linecap:square}.print-map .coord{fill:#444}.print-map .piece{color:black}.print-notes{break-before:page;font-size:11pt;line-height:1.45}.print-notes h1{font:22pt Georgia,serif;margin:0 0 8mm}.print-notes h2{font-size:14pt;margin:6mm 0 3mm;break-after:avoid}.print-notes p{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45;orphans:3;widows:3}.print-notes .legend{display:flex;flex-wrap:wrap;gap:6mm}.legend-item{display:flex;align-items:center;gap:2mm;break-inside:avoid;font-size:9pt}.legend-item svg{width:9mm;height:8mm}.selection-outline,.cursor,.door-preview{display:none}}
+[hidden]{display:none!important}.dialog-actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}#share-link{font-size:12px;overflow-wrap:anywhere}#share-status{font-weight:600;color:var(--green)}dialog{width:min(620px,calc(100% - 24px))}@media(max-width:700px){.topbar nav button{flex:1 1 28%;min-width:90px}.dialog-actions button{flex:1 1 45%}}
 
 </style>
+
 
 
 
@@ -22,7 +24,7 @@
 <a class="skip" href="#board">Ir al tablero</a>
 <header class="topbar">
  <div class="brand"><span class="brand-icon" aria-hidden="true">⚔</span><div><strong>Taller de misiones</strong><small>PARA HEROQUEST · EDICIÓN FAMILIAR</small></div></div>
- <nav aria-label="Archivos"><button id="new">Nueva</button><button id="load">Abrir JSON</button><button id="save">Guardar JSON</button><button id="print">Imprimir</button><button id="pdf" class="primary">Descargar PDF</button></nav>
+ <nav aria-label="Archivos"><button id="new">Nueva</button><button id="load">Abrir JSON</button><button id="save">Guardar JSON</button><button id="share" class="primary">Compartir misión</button><button id="print">Imprimir</button><button id="pdf" class="primary">Descargar PDF</button></nav>
 </header>
 <main id="editor">
 <section class="intro"><div><span class="eyebrow">UNA AVENTURA EMPIEZA CON UNA CASILLA</span><h1>Imagina. Coloca. Juega.</h1><p>Elige una pieza y toca el tablero. La historia puede esperar.</p></div><button id="help" class="quiet">¿Cómo se usa?</button></section>
@@ -54,7 +56,9 @@
 <footer class="app-footer"><span>Hecho para inventar aventuras juntos. Proyecto de aficionados, no oficial.</span><button id="credits" class="link-button">Fuentes y créditos</button></footer>
 </main>
 <input type="file" id="file-input" accept=".json,application/json" hidden>
-<dialog id="help-dialog"><h2>Tu primera misión, en tres pasos</h2><ol><li><b>Elige una pieza.</b> Cambia de categoría para encontrar monstruos, muebles o trampas.</li><li><b>Toca donde la quieras.</b> Las puertas encajan en el muro más cercano. Para mover algo, usa Seleccionar, toca la pieza y luego su destino.</li><li><b>Guarda o imprime.</b> Guarda JSON para seguir otro día. Pulsa Descargar PDF para obtener el archivo directamente, o Imprimir para usar una impresora.</li></ol><p><b>En tablet:</b> pulsa Táctil para ampliar las casillas. Desliza para recorrer el tablero; un toque coloca, un deslizamiento no.</p><p><b>Girar:</b> gira la pieza seleccionada o la próxima que colocarás. En una puerta, cambia el lado de apertura sin separarla del muro.</p><p><b>Teclado:</b> enfoca el tablero; flechas para desplazarte, Enter para actuar, R para girar, Suprimir para borrar, Escape para soltar. Ctrl/Cmd+Z deshace; Ctrl/Cmd+Mayús+Z rehace. Las puertas se colocan en el muro más próximo a la casilla.</p><p><b>PDF:</b> papel A4, horizontal, escala 100 %, márgenes predeterminados y encabezados/pies del navegador desactivados. La cuadrícula conserva las casillas cuadradas.</p><p>El autoguardado depende del navegador y del dispositivo. Guarda un JSON para conservar una copia o llevarla a otra tablet.</p><form method="dialog"><button class="primary">¡A crear!</button></form></dialog>
+<dialog id="share-dialog" aria-labelledby="share-heading"><h2 id="share-heading">Llévate tu aventura</h2><p>Envía este enlace por WhatsApp, correo u otra aplicación. Al abrirlo se recuperan el tablero, las piezas y los textos para seguir editando.</p><p>Es una copia de este momento. Si cambias la misión, comparte un enlace nuevo. Cualquiera que reciba el enlace podrá abrirla.</p><label for="share-link">Enlace de la misión</label><textarea id="share-link" rows="3" readonly spellcheck="false"></textarea><p id="share-status" role="status" aria-live="polite"></p><div class="dialog-actions"><button id="share-send" class="primary" disabled>Enviar enlace…</button><button id="share-copy" disabled>Copiar enlace</button><button id="share-json">Guardar JSON</button></div><form method="dialog"><button>Cerrar</button></form></dialog>
+<dialog id="receive-dialog" aria-labelledby="receive-heading"><h2 id="receive-heading">Te han enviado una misión</h2><p id="receive-summary"></p><p>Al abrirla podrás seguir editándola. Si ya tienes una misión en este tablero, puedes guardar antes una copia. También podrás volver a ella con Deshacer.</p><div class="dialog-actions"><button id="receive-open" class="primary">Abrir misión</button><button id="receive-backup">Guardar mi misión actual</button></div><form method="dialog"><button>Ahora no</button></form></dialog>
+<dialog id="help-dialog"><h2>Tu primera misión, en tres pasos</h2><ol><li><b>Elige una pieza.</b> Cambia de categoría para encontrar monstruos, muebles o trampas.</li><li><b>Toca donde la quieras.</b> Las puertas encajan en el muro más cercano. Para mover algo, usa Seleccionar, toca la pieza y luego su destino.</li><li><b>Guarda o imprime.</b> Guarda JSON para seguir otro día. Pulsa Descargar PDF para obtener el archivo directamente, o Imprimir para usar una impresora.</li></ol><p><b>En tablet:</b> pulsa Táctil para ampliar las casillas. Desliza para recorrer el tablero; un toque coloca, un deslizamiento no.</p><p><b>Girar:</b> gira la pieza seleccionada o la próxima que colocarás. En una puerta, cambia el lado de apertura sin separarla del muro.</p><p><b>Teclado:</b> enfoca el tablero; flechas para desplazarte, Enter para actuar, R para girar, Suprimir para borrar, Escape para soltar. Ctrl/Cmd+Z deshace; Ctrl/Cmd+Mayús+Z rehace. Las puertas se colocan en el muro más próximo a la casilla.</p><p><b>PDF:</b> papel A4, horizontal, escala 100 %, márgenes predeterminados y encabezados/pies del navegador desactivados. La cuadrícula conserva las casillas cuadradas.</p><p>El autoguardado depende del navegador y del dispositivo. Pulsa Compartir misión para enviar un enlace y continuar en otro dispositivo sin mover archivos. Recuerda enviarlo antes de devolver un móvil prestado. También puedes guardar un JSON como copia.</p><form method="dialog"><button class="primary">¡A crear!</button></form></dialog>
 <dialog id="credits-dialog"><h2>Fuentes y créditos</h2><p>Editor e iconos originales. HeroQuest es una marca de sus titulares; este proyecto de aficionados no está afiliado a Hasbro.</p><p>Geometría clásica contrastada con <a href="https://commons.wikimedia.org/wiki/File:Heroquest_board.svg" target="_blank" rel="noopener">Heroquest board, de CMG Lee</a> (CC BY-SA 4.0). Adaptación: polígonos de salas, líneas de muro y presentación monocroma; sin texturas ni ilustraciones originales del juego. La geometría derivada se distribuye con <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p><p>La plantilla clásica facilitada por el usuario se contrastó con esa referencia, incluido el entrante de la sala sureste. La cara B se ha trazado de heroquest_caraB_A4.pdf, confirmado expresamente por el usuario como referencia correcta: 25 columnas y 19 filas, con la franja inferior comprimida de la imagen regularizada a una fila cuadrada. No se han usado fotografías originales que no estaban disponibles.</p><form method="dialog"><button>Cerrar</button></form></dialog>
 <div id="print-root" aria-hidden="true"></div>
 <script>
@@ -440,6 +444,45 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
 
 </script>
 <script>
+/* Enlaces autocontenidos: no se envía la misión a un servidor. */
+(function(root){
+'use strict';
+const MAX_TOKEN=8000,MAX_BYTES=500000;
+const utf8=new TextEncoder(),text=new TextDecoder('utf-8',{fatal:true});
+function pack(s){return [1,s.board,[s.mission.title,s.mission.intro,s.mission.objectives,s.mission.notes],s.items.map(i=>[i.type,i.x,i.y,i.rotation,i.o||'',i.label||''])];}
+function unpack(a){
+ if(!Array.isArray(a)||a.length!==4||a[0]!==1||!Array.isArray(a[2])||a[2].length!==4||!Array.isArray(a[3])||a[3].length>1500)throw Error('Formato de enlace incompatible.');
+ return {format:'heroquest-taller',version:1,board:a[1],mission:Object.fromEntries(['title','intro','objectives','notes'].map((k,n)=>[k,a[2][n]])),items:a[3].map((i,n)=>{
+  if(!Array.isArray(i)||i.length!==6)throw Error('Pieza de enlace inválida.');
+  return {id:'enlace-'+n,type:i[0],x:i[1],y:i[2],rotation:i[3],o:i[4],label:i[5]};
+ })};
+}
+function base64(bytes){let s='';for(const b of bytes)s+=String.fromCharCode(b);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+async function transform(bytes,compress){
+ const stream=new Blob([bytes]).stream().pipeThrough(compress?new CompressionStream('deflate'):new DecompressionStream('deflate'));
+ const reader=stream.getReader(),chunks=[];let size=0;
+ try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>MAX_BYTES){await reader.cancel();throw Error('La misión del enlace es demasiado grande.');}chunks.push(value);}}finally{reader.releaseLock();}
+ const out=new Uint8Array(size);let offset=0;for(const c of chunks){out.set(c,offset);offset+=c.length;}return out;
+}
+async function encode(state){
+ const bytes=utf8.encode(JSON.stringify(pack(state)));let token='u1.'+base64(bytes);
+ if(typeof CompressionStream==='function'&&typeof DecompressionStream==='function'){
+  const compressed='z1.'+base64(await transform(bytes,true));if(compressed.length<token.length)token=compressed;
+ }
+ if(token.length>MAX_TOKEN)throw Error('Esta misión tiene demasiado texto para un enlace fiable. Guarda y comparte el archivo JSON para conservarla completa.');
+ return token;
+}
+async function decode(token){
+ if(typeof token!=='string'||token.length>MAX_TOKEN||! /^(u1|z1)\.[A-Za-z0-9_-]+$/.test(token))throw Error('El enlace está incompleto o no es válido.');
+ const raw=atob(token.slice(3).replace(/-/g,'+').replace(/_/g,'/'));let bytes=Uint8Array.from(raw,c=>c.charCodeAt(0));
+ if(token.startsWith('z1.')){if(typeof DecompressionStream!=='function')throw Error('Actualiza el navegador para abrir este enlace.');bytes=await transform(bytes,false);}
+ return unpack(JSON.parse(text.decode(bytes)));
+}
+const api={encode,decode};if(typeof module==='object'&&module.exports)module.exports=api;else root.HQShare=api;
+})(globalThis);
+
+</script>
+<script>
 /* Taller de misiones. Sin dependencias, red ni servicios externos.
  * Geometría adaptada de Heroquest board.svg, CMG Lee, CC BY-SA 4.0.
  * https://commons.wikimedia.org/wiki/File:Heroquest_board.svg
@@ -541,6 +584,47 @@ function setZoom(z){zoom=Math.max(1,Math.min(3,z));$('board').style.width=zoom*1
 function touchZoom(){const available=$('board-scroll').clientWidth-28;setZoom(Math.max(1,((COLS+1.6)*44.5)/available));$('board').style.minWidth=((COLS+1.6)*44.5)+'px';say('Modo táctil: casillas de al menos 44 píxeles. Desliza para recorrer el tablero.');}
 function preparePrint(){flushText();const svg=`<svg xmlns="${NS}" class="print-map" viewBox="-0.8 -0.8 ${COLS+1.6} ${ROWS+1.6}" style="width:${176*(COLS+1.6)/(ROWS+1.6)}mm">${base}${state.items.filter(i=>i.type!=='note').map(i=>pieceMarkup(i,true)).join('')}${state.items.filter(i=>i.type==='note').map(i=>pieceMarkup(i,true)).join('')}</svg>`;let html=`<section class="print-sheet"><h1 class="print-title">${esc(state.mission.title.trim()||BOARDS[state.board].name)}</h1>${svg}<div class="print-foot">Taller de misiones · ${esc(BOARDS[state.board].name)} · ${state.items.length} piezas · ${esc(BOARDS[state.board].credit)} · Proyecto no oficial</div></section>`;const sections=[['intro','Introducción'],['objectives','Objetivos'],['notes','Notas de salas']].filter(([k])=>state.mission[k].trim());if(sections.length){html+=`<section class="print-notes"><h1>${esc(state.mission.title.trim()||'Mi misión')}</h1>`;sections.forEach(([k,t])=>{html+=`<h2>${t}</h2><p>${esc(state.mission[k])}</p>`;});const counts=new Map();state.items.forEach(i=>counts.set(i.type,(counts.get(i.type)||0)+1));if(counts.size){html+='<h2>Piezas de esta misión</h2><div class="legend">';counts.forEach((n,t)=>{html+=`<div class="legend-item"><svg viewBox="0 0 100 100">${icon(t)}</svg><span>${esc(byId[t].name)} × ${n}</span></div>`;});html+='</div>';}html+='</section>';}$('print-root').innerHTML=html;}
 function download(){flushText();const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(state.mission.title.trim().replace(/[^\p{L}\p{N}_-]+/gu,'-').slice(0,70)||'mision-heroquest')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);say('JSON preparado para descargar. Conserva esta copia para otro dispositivo.');}
+let sharedURL='',sharedTitle='',shareGeneration=0,incoming=null,incomingGeneration=0;
+async function prepareShare(){
+ flushText();const snapshot=clone(state),generation=++shareGeneration;sharedURL='';sharedTitle=snapshot.mission.title.trim()||'Mi misión HeroQuest';
+ $('share-link').value='';$('share-send').disabled=true;$('share-copy').disabled=true;$('share-status').textContent='Preparando la copia…';$('share-dialog').showModal();
+ try{
+  const token=await HQShare.encode(snapshot);if(generation!==shareGeneration)return;
+  sharedURL='https://5n7t99rb9d-web.github.io/heroquest-editor/#mision='+token;$('share-link').value=sharedURL;
+  $('share-send').disabled=typeof navigator.share!=='function';$('share-copy').disabled=false;
+  $('share-status').textContent=navigator.share?'Pulsa Enviar enlace y elige a quién enviarlo.':'Copia el enlace y pégalo en un mensaje para conservar tu aventura.';
+ }catch(e){$('share-status').textContent=e.message;}
+}
+async function sendShare(){
+ if(!sharedURL)return;
+ try{await navigator.share({title:sharedTitle,url:sharedURL});$('share-status').textContent='Enlace entregado a la aplicación elegida. Comprueba allí que el mensaje se ha enviado.';}
+ catch(e){$('share-status').textContent=e.name==='AbortError'?'Envío cancelado. Tu misión sigue guardada en este navegador.':'No se pudo abrir el menú de compartir. Usa Copiar enlace.';}
+}
+async function copyShare(){
+ if(!sharedURL)return;
+ try{await navigator.clipboard.writeText(sharedURL);$('share-status').textContent='Enlace copiado. Pégalo en WhatsApp, correo u otro mensaje y envíalo.';}
+ catch{$('share-link').focus();$('share-link').select();$('share-status').textContent='Mantén pulsado el enlace seleccionado y elige Copiar; después pégalo en tu mensaje.';}
+}
+function clearIncomingHash(){if(globalThis.location?.hash.startsWith('#mision=')){try{window.history.replaceState(null,'',location.pathname+location.search);}catch{}}}
+async function receiveShare(){
+ const hash=globalThis.location?.hash||'';if(!hash.startsWith('#mision='))return;
+ const generation=++incomingGeneration;incoming=null;$('receive-open').disabled=true;
+ try{
+  const next=validate(await HQShare.decode(hash.slice(8)));if(generation!==incomingGeneration)return;incoming=next;
+  $('receive-summary').textContent=(next.mission.title.trim()||'Misión sin título')+' · '+BOARDS[next.board].name+' · '+next.items.length+' pieza'+(next.items.length===1?'':'s');
+  $('receive-open').disabled=false;
+ }catch(e){if(generation!==incomingGeneration)return;$('receive-summary').textContent='No se puede abrir este enlace. '+e.message+' Tu misión actual se conserva.';}
+ if(!$('receive-dialog').open)$('receive-dialog').showModal();
+}
+$('share').onclick=prepareShare;$('share-send').onclick=sendShare;$('share-copy').onclick=copyShare;$('share-json').onclick=download;
+$('receive-backup').onclick=download;
+$('receive-open').onclick=()=>{
+ if(!incoming)return;flushText();persist();selected=null;preview=null;cursor={x:1,y:1};
+ commit(incoming,'Misión del enlace abierta. Puedes seguir editando o usar Deshacer para volver a la anterior.');syncFields();
+ if(matchMedia('(pointer: coarse)').matches)touchZoom();$('receive-dialog').close();
+};
+$('receive-dialog').addEventListener('close',()=>{incoming=null;incomingGeneration++;clearIncomingHash();});
+window.addEventListener('hashchange',receiveShare);
 async function downloadPDF(){
  const button=$('pdf');button.disabled=true;button.textContent='Preparando…';
  try{
@@ -582,6 +666,7 @@ let recovery='';try{const cached=localStorage.getItem(KEY);if(cached)state=valid
 palette();syncFields();render();if(recovery)say(recovery);else if(state.items.length)say('Tu última misión está lista para seguir.');if(matchMedia('(pointer: coarse)').matches)touchZoom();
 // API de lectura y validación para pruebas reproducibles, sin acceso a red.
 window.HQ={getState:()=>clone(state),validate,catalog:clone(catalog),get rooms(){return clone(ROOMS);},get walls(){return [...walls.values()];},boards:BOARDS,preparePrint,canPlace};
+receiveShare();
 })();
 
 </script>

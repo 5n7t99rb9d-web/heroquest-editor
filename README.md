@@ -15,6 +15,10 @@ Elige un tablero, coloca las piezas y descarga tu misión como JSON editable o P
 
 Consulta la [guía de uso](GUIA.md). Puedes descargar `index.html` y abrirlo localmente en un navegador moderno; todas las bibliotecas están incorporadas.
 
+## Compartir sin mover archivos
+
+Pulsa **Compartir misión** y envía el enlace por WhatsApp, correo u otra aplicación. En otro dispositivo, abre el enlace y pulsa **Abrir misión**. Cada enlace conserva una copia de ese momento; comparte uno nuevo después de editar. Cualquiera que reciba el enlace podrá abrirla. No se necesitan cuentas ni se suben misiones al repositorio.
+
 ## Desarrollo y alojamiento
 
 Aplicación estática sin backend, servicios de pago ni proceso de compilación. GitHub Pages publica la rama `main`, carpeta raíz. Para actualizar, sustituye `index.html` por una versión nueva. La web conserva las misiones locales mientras se mantenga su dirección y el almacenamiento del navegador.

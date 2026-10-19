@@ -1,6 +1,6 @@
 # Taller de misiones para HeroQuest
 
-Editor estático en español. Versión 1.1, 18 de octubre de 2026.
+Editor estático en español. Versión 1.2, 19 de octubre de 2026.
 
 ## Empezar en un ordenador
 
@@ -34,6 +34,16 @@ En tablet, la forma más fiable de abrirlo es mediante una página estática com
 La última misión de cada tablero se guarda automáticamente en el almacenamiento de este navegador. Depende del dispositivo, perfil, URL y permisos del navegador; no se sincroniza. El modo privado o los archivos locales pueden restringirlo. Si no está disponible, se muestra **Sin autoguardado · usa Guardar JSON**. Guarda JSON para tener una copia duradera o cambiar de dispositivo. No mantengas dos pestañas editando la misma misión: se avisa si otra pestaña cambia el guardado.
 
 Abrir JSON valida el formato, las piezas y sus posiciones antes de sustituir la misión. Los archivos de otros editores no son compatibles. El JSON identifica el mapa y recupera el tablero correspondiente al abrirlo.
+
+## Compartir una misión
+
+1. Pulsa **Compartir misión**. Se prepara una copia del tablero, las piezas y todos los textos.
+2. Pulsa **Enviar enlace…** y elige WhatsApp, correo u otra aplicación disponible. Si el navegador no admite ese menú, usa **Copiar enlace**, pégalo en un mensaje y envíalo.
+3. Quien reciba el enlace pulsa **Abrir misión** para continuar editándola. Antes puede guardar la misión que ya tenía. La apertura se puede deshacer.
+
+No necesita cuenta y no sube las misiones al repositorio. La copia está dentro del enlace: cualquiera que lo reciba puede abrirla. No se sincroniza; después de editar, comparte un enlace nuevo. En un móvil prestado, recuerda enviar el mensaje antes de devolverlo. Cancelar el menú de compartir no envía ni conserva una copia en otro dispositivo.
+
+Los enlaces apuntan a la web pública del editor. Para abrir enlaces comprimidos se necesita un navegador actualizado. Si una misión es demasiado larga para un enlace fiable, se avisa y se ofrece Guardar JSON sin recortar contenido. Las aplicaciones de mensajería pueden imponer sus propios límites; guarda JSON para copias de archivo.
 
 ## PDF e impresión
 
@@ -71,4 +81,4 @@ Bibliotecas incluidas localmente: jsPDF 3.0.3 y svg2pdf.js 2.6.0, licencias MIT 
 
 218 comprobaciones de lógica superadas. Se probaron en navegador la colocación, puertas en muros, movimiento, rotación, deshacer/rehacer, cambio de mapa sin perder la misión, guardar/abrir JSON, recuperar tras recarga y descargar PDF. Vista de tablet de 1024 × 768 comprobada, con casillas táctiles mayores de 44 píxeles. PDF rápido: una página A4 horizontal; misión con notas: dos páginas; 100 notas: cinco páginas con la última nota presente. Ambas salidas se revisaron visualmente.
 
-La apertura mediante `file://` no pudo probarse en el navegador automatizado porque su política solo permite HTTP/HTTPS. El archivo autónomo no tiene dependencias remotas, módulos, peticiones de red ni un proceso de instalación; sus tres scripts incrustados se comprobaron sintácticamente. No se probó Safari/iPad físico ni una impresora física. Para ese uso, se recomienda comprobar una misión pequeña antes de preparar una sesión completa.
+La apertura mediante `file://` no pudo probarse en el navegador automatizado porque su política solo permite HTTP/HTTPS. El archivo autónomo no tiene dependencias remotas, módulos, peticiones de red ni un proceso de instalación; sus cuatro scripts incrustados se comprobaron sintácticamente. No se probó Safari/iPad físico ni una impresora física. Para ese uso, se recomienda comprobar una misión pequeña antes de preparar una sesión completa.
