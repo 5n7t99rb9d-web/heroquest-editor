@@ -1,0 +1,31 @@
+{
+  "format": "heroquest-taller",
+  "version": 1,
+  "board": "classic",
+  "items": [
+    {"id":"e1","type":"stairs","x":10,"y":8,"rotation":0},
+    {"id":"e2","type":"orc","x":14,"y":8,"rotation":0},
+    {"id":"e3","type":"goblin","x":15,"y":10,"rotation":0},
+    {"id":"e4","type":"chest","x":14,"y":10,"rotation":0},
+    {"id":"e5","type":"note","x":14,"y":10,"rotation":0,"label":"A"},
+    {"id":"e6","type":"door","x":16,"y":9,"rotation":0,"o":"v"},
+    {"id":"e7","type":"door","x":17,"y":8,"rotation":0,"o":"v"},
+    {"id":"e8","type":"bookcase","x":18,"y":5,"rotation":0},
+    {"id":"e9","type":"table","x":18,"y":6,"rotation":0},
+    {"id":"e10","type":"skeleton","x":17,"y":8,"rotation":0},
+    {"id":"e11","type":"secret","x":18,"y":9,"rotation":0,"o":"h"},
+    {"id":"e12","type":"pit","x":16,"y":10,"rotation":0},
+    {"id":"e13","type":"block","x":16,"y":12,"rotation":0},
+    {"id":"e14","type":"door","x":18,"y":10,"rotation":0,"o":"h"},
+    {"id":"e15","type":"throne","x":19,"y":11,"rotation":0},
+    {"id":"e16","type":"treasure","x":20,"y":12,"rotation":0},
+    {"id":"e17","type":"warrior","x":19,"y":12,"rotation":0},
+    {"id":"e18","type":"note","x":19,"y":11,"rotation":0,"label":"B"}
+  ],
+  "mission": {
+    "title": "La llave de la biblioteca",
+    "intro": "Mentor os recibe junto a la chimenea. Una pequeña llave de plata ha desaparecido de su biblioteca. Dicen que un guardián la esconde entre las ruinas. Explorad con cuidado y regresad juntos.",
+    "objectives": "Encontrar la llave de plata y volver a las escaleras. Podéis adaptar la dificultad y los monstruos al grupo antes de jugar.",
+    "notes": "A: El cofre guarda una pista: «Los libros ocultan más de un secreto».\n\nB: Bajo el trono está la llave de plata. El guardián protege la sala.\n\nMisión de ejemplo para aprender el editor; no es una misión oficial ni tiene una dificultad equilibrada o probada en partida."
+  }
+}
